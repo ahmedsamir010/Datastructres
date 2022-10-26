@@ -1,84 +1,75 @@
 #include<iostream>
+#define maxsize 100000
 using namespace std;
-#define maxsize 100
-class circ {
+class stack {
 private:
-    int front, rear, arr[maxsize];
+	int top;int arr[maxsize];
 public:
-    circ() { front = -1, rear = -1; }
-    void insert(int value);
-    int remove();
-    bool isFull();
-    bool isEmpty();
-    void display();
+	stack() { top = -1; }
+	void push(int value);
+	int pop();
+	int peek();
+	bool isFull();
+	bool isEmpty();
+	void display();
 };
 int main()
 {
-    circ c;
-    c.insert(10);
-    c.insert(20);
-    c.display();
-    c.remove();
-    c.display();
-    return 0;
+	stack s;
+	s.push(10);
+	s.push(20);
+	s.push(30);
+	s.pop();
+	s.push(50);
+	s.display();
+
+	return 0;
+}
+void stack::push(int value)
+{
+	if (isFull()) {
+		cout << "Stack is Over Flow" << endl;
+		exit(-1);
+	}
+	arr[++top] = value;
+}
+int stack::pop()
+{
+	if (isEmpty()) {
+		cout << "Stack is Under Flow" << endl;
+		exit(-1);;
+	}
+	return arr[top--];
+}
+int stack::peek()
+{
+	if (isEmpty()) {
+		cout << "Stack is Under Flow" << endl;
+		exit(-1);
+	}
+	return arr[top];
+	
+}
+bool stack::isFull()
+{
+	if (top == maxsize - 1)return true;
+	return false;
 }
 
-void circ::insert(int value)
+bool stack::isEmpty()
 {
-    if (isFull()) {
-        cout << "Circ is Full ";
-    }
-    if (front == -1 and rear == -1) {
-        front = 0, rear = 0;
-    }
-    else {
-        if (rear == maxsize - 1)
-            rear = 0;
-        else
-            rear++;
-    }
-    arr[rear] = value;
-}
-int circ::remove()
-{
-    int temp = arr[front];
-    if (isEmpty()) {
-        cout << "Circ is Empty" << endl;
-    }
-    else {
-        if (front == 0 and rear == 0) {
-            rear = -1, front = -1;
-        }
-        front++;
-    }
-    return temp;
-}
-bool circ::isFull()
-{
-    if ((front == 0 and rear == maxsize - 1) or (front == rear + 1))return true;
-    return false;
+	if (top == -1)return true;
+	return false;
 }
 
-bool circ::isEmpty()
+void stack::display()
 {
-    if (front = -1 and rear == -1)return true;
-    return false;
-}
-
-void circ::display()
-{
-    if (front <= rear) {
-        for (int i = front;i <= rear;i++) {
-            cout << arr[i] << "\t";
-        }
-    }
-    else {
-        for (int i = front;i < maxsize;i++) {
-            cout << arr[i] << "\t";
-        }
-        for (int i = 0;i <= rear;i++) {
-            cout << arr[i] << "\t";
-        }
-    }
-
+	if (isEmpty()) {
+		cout << "Stack is Under Flow" << endl;
+		exit(-1);
+	}
+	for (int i = top;i >= 0;i--) {
+		cout << arr[i] << "\t";
+	}
+	cout << endl;
 }
